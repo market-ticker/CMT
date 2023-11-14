@@ -19,17 +19,18 @@ contract CommoditiesMarketTicker {
         owner = msg.sender;
     }
 
-    function createAccount(string memory accountType, string memory info) public returns (uint256) {
+    function createAccount(string memory accountType, string memory info, bool isProducer) public returns (uint256) {
         uint256 accountId = nextAccountId++;
         if (keccak256(bytes(accountType)) == keccak256(bytes("Buyer"))) {
-            Buyer newBuyer = new Buyer(accountId, info);
+            Buyer newBuyer = new Buyer(accountId, info, isProducer);
             accounts[accountId] = IAccount(address(newBuyer));
         } else if (keccak256(bytes(accountType)) == keccak256(bytes("Seller"))) {
-            Seller newSeller = new Seller(accountId, info);
+            Seller newSeller = new Seller(accountId, info, isProducer);
             accounts[accountId] = IAccount(address(newSeller));
         }
         return accountId;
     }
+
 
     function createCommodity(string memory name, uint256 price, uint256 quantity, string memory category) public returns (uint256) {
         uint256 commodityId = nextCommodityId++;

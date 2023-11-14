@@ -6,10 +6,12 @@ import "./interfaces/IAccount.sol";
 contract Seller is IAccount {
     uint256 private id;
     string private info;
+    bool private isProducer;
 
-    constructor(uint256 _id, string memory _info) {
+    constructor(uint256 _id, string memory _info, bool _isProducer) {
         id = _id;
         info = _info;
+        isProducer = _isProducer
     }
 
     function getId() external view override returns (uint256) {
@@ -22,5 +24,9 @@ contract Seller is IAccount {
 
     function getAccountType() external pure override returns (string memory) {
         return "Seller";
+    }
+
+    function getProducerStatus() external view returns (bool) {
+        return isProducer;
     }
 }
