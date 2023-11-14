@@ -1,7 +1,7 @@
 // Buyer.sol
 pragma solidity ^0.8.0;
 
-import "./IAccount.sol";
+import "./interfaces/IAccount.sol";
 
 contract Buyer is IAccount {
     uint256 private id;

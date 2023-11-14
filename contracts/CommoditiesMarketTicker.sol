@@ -1,7 +1,7 @@
 // CommoditiesMarketTicker.sol
 pragma solidity ^0.8.0;
 
-import "./IAccount.sol";
+import "./interfaces/IAccount.sol";
 import "./Buyer.sol";
 import "./Seller.sol";
 import "./Commodity.sol";
