@@ -1,4 +1,3 @@
-
 # Smart Contract Deployment and Verification
 
 ## Overview
@@ -6,7 +5,7 @@
 This documentation provides an overview of the deployment and verification process for two smart contracts in a Solidity project using Hardhat. The contracts involved are:
 
 - `CommodityToken`: Represents a tradable commodity with ERC-20 standard functionalities.
-- `CommoditiesMarketTicker`: Manages the trading of `CommodityToken`, including matching orders and executing trades.
+- `CommoditiesMarketTicker`: Manages the trading of `CommodityToken`, including minting commodities for sellers, matching orders, and executing trades.
 
 ## Deployment Process
 
@@ -42,6 +41,8 @@ sequenceDiagram
   User->>CMT: createCommodity("Maize", "MAIZE")
   CMT->>CT: Deploy new token
   CT-->>User: Token deployed
+  User->>CMT: mintCommodityTokens(CT, amount)
+  CMT-->>User: Tokens minted
   User->>CMT: placeOrder(CT, amount, price, isBuyOrder)
   CMT->>CMT: matchOrder(newOrder, oppositeOrders)
   Note over CMT: If match is found
@@ -59,7 +60,7 @@ sequenceDiagram
 ## Contracts Description
 
 - `CommodityToken`: Implements the ERC-20 token standard and includes functions to mint and burn tokens representing commodities.
-- `CommoditiesMarketTicker`: Handles the logic for creating orders, matching them, and executing trades. It is responsible for ensuring the integrity of the trading process.
+- `CommoditiesMarketTicker`: Handles the logic for creating and minting orders, matching them, and executing trades. It is responsible for ensuring the integrity of the trading process.
 
 ## Sequence of Operations
 
