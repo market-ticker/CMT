@@ -32,6 +32,11 @@ contract CommoditiesMarketTicker {
         emit CommodityCreated(address(newCommodity));
     }
 
+    function mintCommodityTokens(address token, uint256 amount) public {
+        require(commodities[token], "Token is not a registered commodity");
+        CommodityToken(token).mint(msg.sender, amount);
+    }
+
     function placeOrder(address token, uint256 amount, uint256 price, bool isBuyOrder) public {
         require(commodities[token], "Token is not a valid commodity");
 

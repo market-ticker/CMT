@@ -23,6 +23,7 @@ classDiagram
   class CommoditiesMarketTicker {
     +Order[] buyOrders
     +Order[] sellOrders
+    +mintCommodityTokens(address token, uint256 amount)
     +placeOrder(address token, uint256 amount, uint256 price, bool isBuyOrder)
     +executeTrade(Order buyOrder, Order sellOrder)
   }
@@ -52,7 +53,7 @@ sequenceDiagram
 
 ## Contracts on Sepolia
 
-- `CommoditiesMarketTicker`: [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0x2D48FB385a33DB0B5568A76CE4dF8C02EBD8D0D0#code)
+- `CommoditiesMarketTicker`: [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0x4F044B8375c49a181d3C0Da537eAB3d132cB766e#code)
 - `CommodityToken`: [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0x94ea3F341268cF911a00E635BCF40A1BC0c7ef1b#code)
 
 ## Contracts Description
