@@ -21,7 +21,7 @@ contract CommoditiesMarketTicker {
     Order[] public buyOrders;
     Order[] public sellOrders;
 
-    event CommodityCreated(address token);
+    event CommodityCreated(address token, string name, string symbol);
     event OrderPlaced(uint256 id, address user, uint256 amount, uint256 price, bool isBuyOrder);
     event OrderMatched(uint256 buyOrderId, uint256 sellOrderId, uint256 matchedAmount, uint256 matchedPrice);
     event OrderRemoved(uint256 orderId);
@@ -29,7 +29,7 @@ contract CommoditiesMarketTicker {
     function createCommodity(string memory name, string memory symbol) public {
         CommodityToken newCommodity = new CommodityToken(name, symbol);
         commodities[address(newCommodity)] = true;
-        emit CommodityCreated(address(newCommodity));
+        emit CommodityCreated(address(newCommodity), name, symbol);
     }
 
     function mintCommodityTokens(address token, uint256 amount) public {

@@ -1,0 +1,33 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: sepolia
+    source:
+      address: "0x4F044B8375c49a181d3C0Da537eAB3d132cB766e"
+      abi: Contract
+      startBlock: 4725608
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - CommodityCreated
+        - OrderMatched
+        - OrderPlaced
+        - OrderRemoved
+      abis:
+        - name: Contract
+          file: Contract/abis/Contract.json
+      eventHandlers:
+        - event: CommodityCreated(address)
+          handler: handleCommodityCreated
+        - event: OrderMatched(uint256,uint256,uint256,uint256)
+          handler: handleOrderMatched
+        - event: OrderPlaced(uint256,address,uint256,uint256,bool)
+          handler: handleOrderPlaced
+        - event: OrderRemoved(uint256)
+          handler: handleOrderRemoved
+      file: Contract/Contract.wasm
