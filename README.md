@@ -64,3 +64,86 @@ graph TD
 - **Commodities:** Tokenized commodities with related trade data stored on The Graph.
 - **Orders:** Managed through smart contracts, detailing trade specifics.
 - **Matched Orders:** Records of completed trades, including participant details and transaction specifics.
+```mermaid
+classDiagram
+    class UserToken {
+        +address commodityMarketContract
+        +mint(account, id, amount, data)
+    }
+
+    class Commodity {
+        +address commodityMarketContract
+        +mint(account, id, amount, data)
+    }
+
+    class CommodityMarket {
+        +UserToken userToken
+        +Commodity commodityContract
+        +mapping(address => uint256) users
+        +mapping(string => uint256) commodities
+        +mapping(uint256 => address) orders
+        +uint256 nextCommodityId
+        +uint256 nextOrderId
+        +uint256 currentPrice
+        +registerUser(name, userType, location, verificationStatus)
+        +createCommodity(name, symbol)
+        +placeOrder(symbolCommodity, region, country, amount, price, currency, harvestDate, validityPeriod, isBuyOrder)
+        +matchOrder(orderId, symbolCommodity, amount, price, currency)
+        +requestUgxPrice(_oracle, _jobId)
+        +fulfillUgxPrice(_requestId, _price)
+    }
+
+    CommodityMarket "1" --> "1" UserToken : manages
+    CommodityMarket "1" --> "1" Commodity : manages
+
+    class Chainlink {
+        +VRFCoordinatorV2Interface COORDINATOR
+        +bytes32 keyHash
+        +uint32 callbackGasLimit
+        +uint16 requestConfirmations
+        +uint32 numWords
+    }
+
+    CommodityMarket --> Chainlink : uses
+
+    class TheGraph {
+        -Store dynamic metadata
+    }
+
+    UserToken --> TheGraph : metadata updates
+    Commodity --> TheGraph : metadata updates
+
+    class Order {
+        +uint256 id
+        +address owner
+        +uint256 commodityId
+        +string region
+        +string country
+        +uint256 amount
+        +uint256 price
+        +string currency
+        +uint256 harvestDate
+        +uint256 validityPeriod
+        +bool isBuyOrder
+    }
+
+    class MatchedOrder {
+        +uint256 orderId
+        +address seller
+        +address buyer
+        +uint256 price
+        +uint256 amount
+    }
+
+    CommodityMarket --> Order : creates & manages
+    CommodityMarket --> MatchedOrder : creates & manages
+```
+## Deployment
+
+The Commodity Market Ticker smart contract is deployed on the Sepolia network:
+[CommodityMarket Contract on Sepolia](https://sepolia.etherscan.io/address/0xEbDc891011504E58404Fb39f2c362c57414faab4)
+
+## Subgraph
+
+The Commodity Market Ticker subgraph is available at:
+[Subgraph on The Graph Studio](https://api.studio.thegraph.com/query/33148/commodity-market-ticker/v0.0.1)
