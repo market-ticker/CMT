@@ -1,70 +1,66 @@
-# Smart Contract Deployment and Verification
 
-## Overview
+# Commodity Market Ticker Project
 
-This documentation provides an overview of the deployment and verification process for two smart contracts in a Solidity project using Hardhat. The contracts involved are:
+## Project Overview
 
-- `CommodityToken`: Represents a tradable commodity with ERC-20 standard functionalities.
-- `CommoditiesMarketTicker`: Manages the trading of `CommodityToken`, including minting commodities for sellers, matching orders, and executing trades.
+### Vision and Goal
+**Vision:** Empower small-scale farmers and traders/exporters by optimizing resource allocation and market operations through blockchain technology.
 
-## Deployment Process
+**Goal:** Develop a decentralized platform for seamless communication between farmers and exporters/traders, enhancing market transparency and integrating modern transaction methods.
 
-The deployment involves compiling the smart contracts using Hardhat and then deploying them to the Sepolia test network. The `CommodityToken` contract is deployed first, followed by the `CommoditiesMarketTicker` contract.
+## Overall Architecture
 
+### System Description
+The system is structured on Ethereum blockchain, incorporating smart contracts for market operations, off-chain data management with The Graph, and real-time data integration using Chainlink.
+
+### Architecture Diagram
 ```mermaid
-classDiagram
-  class CommodityToken {
-    +string name
-    +string symbol
-    +mint(address to, uint256 amount)
-    +burn(address from, uint256 amount)
-  }
-  class CommoditiesMarketTicker {
-    +Order[] buyOrders
-    +Order[] sellOrders
-    +mintCommodityTokens(address token, uint256 amount)
-    +placeOrder(address token, uint256 amount, uint256 price, bool isBuyOrder)
-    +executeTrade(Order buyOrder, Order sellOrder)
-  }
-  CommodityToken <|-- CommoditiesMarketTicker : manages
+graph TD
+    subgraph Ethereum Blockchain
+        CM[CommodityMarket Contract]
+        UT[UserToken Contract]
+        CC[Commodity Contract]
+        COORD[VRFCoordinatorV2 Interface]
+        CL[Chainlink Client]
+    end
+
+    subgraph External Data Sources
+        ORACLE[Chainlink Oracles]
+    end
+
+    subgraph Off-chain Data
+        GRAPH[The Graph]
+    end
+
+    UI[User Interface] -->|Interacts with| CM
+    CM -->|Manages Users & Orders| UT & CC
+    CM -->|Uses| COORD
+    CM -->|Uses| CL
+    CM -->|Interacts with| ORACLE
+    CM -->|Stores/Fetches Data| GRAPH
+    UT -.->|Minting Tokens| GRAPH
+    CC -.->|Minting Tokens| GRAPH
+    ORACLE -->|Price Feeds & VRF| CM
+    GRAPH -.->|Provides Data To| UI
 ```
 
-## User Interaction Sequence
+## Users/Participants and Their Needs
 
-Here is the sequence diagram depicting the typical user interactions with the trading system:
+- **Small-scale Farmers:** Need access to a wider market, transparent pricing, and easy transaction processes.
+- **Traders/Exporters:** Seek reliable market data, streamlined commodity access, and efficient trading mechanisms.
+- **System Administrators:** Oversee platform operations, manage commodity listings, and ensure system integrity.
 
-```mermaid
-sequenceDiagram
-  participant User
-  participant CommoditiesMarketTicker as CMT
-  participant CommodityToken as CT
-  User->>CMT: createCommodity("Maize", "MAIZE")
-  CMT->>CT: Deploy new token
-  CT-->>User: Token deployed
-  User->>CMT: mintCommodityTokens(CT, amount)
-  CMT-->>User: Tokens minted
-  User->>CMT: placeOrder(CT, amount, price, isBuyOrder)
-  CMT->>CMT: matchOrder(newOrder, oppositeOrders)
-  Note over CMT: If match is found
-  CMT->>CT: mint(buyOrder.user, buyOrder.amount)
-  CT-->>CMT: Tokens minted
-  CMT->>CT: burn(sellOrder.user, sellOrder.amount)
-  CT-->>CMT: Tokens burned
-```
+## Interactions/Sequences
 
-## Contracts on Sepolia
+1. **User Registration:** Users create profiles, receiving unique NFTs.
+2. **Commodity Management:** Admins list commodities; producers mint commodity tokens for sell orders.
+3. **Order Placement & Matching:** Users engage in buy/sell orders, matched by the system.
+4. **Real-time Data Updates:** Utilizing Chainlink for price feeds and VRF.
+5. **Transaction Execution:** Completing trades with commodity transfers.
 
-- `CommoditiesMarketTicker`: [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0x4F044B8375c49a181d3C0Da537eAB3d132cB766e#code)
-- `CommodityToken`: [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0x94ea3F341268cF911a00E635BCF40A1BC0c7ef1b#code)
+## Data Model
 
-## Contracts Description
-
-- `CommodityToken`: Implements the ERC-20 token standard and includes functions to mint and burn tokens representing commodities.
-- `CommoditiesMarketTicker`: Handles the logic for creating and minting orders, matching them, and executing trades. It is responsible for ensuring the integrity of the trading process.
-
-## Sequence of Operations
-
-1. Compile contracts with Hardhat.
-2. Deploy `CommodityToken` and `CommoditiesMarketTicker` to Sepolia.
-3. Verify deployed contracts on the block explorer.
-4. Interact with the verified contracts through the block explorer or other DApps.
+- **User Profiles:** Represented as ERC-1155 NFTs, with metadata managed on The Graph.
+- **Commodities:** Tokenized commodities with related trade data stored on The Graph.
+- **Orders:** Managed through smart contracts, detailing trade specifics.
+- **Matched Orders:** Records of completed trades, including participant details and transaction specifics.

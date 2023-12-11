@@ -1,0 +1,110 @@
+type ChainlinkCancelled @entity(immutable: true) {
+  id: Bytes!
+  Contract_id: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ChainlinkFulfilled @entity(immutable: true) {
+  id: Bytes!
+  Contract_id: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ChainlinkRequested @entity(immutable: true) {
+  id: Bytes!
+  Contract_id: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CommodityCreated @entity(immutable: true) {
+  id: Bytes!
+  comId: BigInt! # uint256
+  name: String! # string
+  symbol: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OrderMatched @entity(immutable: true) {
+  id: Bytes!
+  matchedOrderId: BigInt! # uint256
+  buyer: Bytes! # address
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OrderPlaced @entity(immutable: true) {
+  id: Bytes!
+  orderId: BigInt! # uint256
+  owner: Bytes! # address
+  commodityId: BigInt! # uint256
+  region: String! # string
+  country: String! # string
+  amount: BigInt! # uint256
+  price: BigInt! # uint256
+  currency: String! # string
+  harvestDate: BigInt! # uint256
+  validityPeriod: BigInt! # uint256
+  isBuyOrder: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferRequested @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RequestEthereumPriceFulfilled @entity(immutable: true) {
+  id: Bytes!
+  requestId: Bytes! # bytes32
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UIDAssigned @entity(immutable: true) {
+  id: Bytes!
+  userAddress: Bytes! # address
+  uid: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UserEvent @entity(immutable: true) {
+  id: Bytes!
+  userAddress: Bytes! # address
+  name: String! # string
+  userType: String! # string
+  location: String! # string
+  verificationStatus: Boolean! # bool
+  uid: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

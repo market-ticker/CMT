@@ -1,0 +1,54 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: sepolia
+    source:
+      address: "0xEbDc891011504E58404Fb39f2c362c57414faab4"
+      abi: Contract
+      startBlock: 4867896
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkCancelled
+        - ChainlinkFulfilled
+        - ChainlinkRequested
+        - CommodityCreated
+        - OrderMatched
+        - OrderPlaced
+        - OwnershipTransferRequested
+        - OwnershipTransferred
+        - RequestEthereumPriceFulfilled
+        - UIDAssigned
+        - UserEvent
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: ChainlinkCancelled(indexed bytes32)
+          handler: handleChainlinkCancelled
+        - event: ChainlinkFulfilled(indexed bytes32)
+          handler: handleChainlinkFulfilled
+        - event: ChainlinkRequested(indexed bytes32)
+          handler: handleChainlinkRequested
+        - event: CommodityCreated(uint256,string,string)
+          handler: handleCommodityCreated
+        - event: OrderMatched(uint256,address,uint256)
+          handler: handleOrderMatched
+        - event: OrderPlaced(indexed uint256,indexed address,uint256,string,string,uint256,uint256,string,uint256,uint256,bool)
+          handler: handleOrderPlaced
+        - event: OwnershipTransferRequested(indexed address,indexed address)
+          handler: handleOwnershipTransferRequested
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RequestEthereumPriceFulfilled(indexed bytes32,indexed uint256)
+          handler: handleRequestEthereumPriceFulfilled
+        - event: UIDAssigned(indexed address,uint256)
+          handler: handleUIDAssigned
+        - event: UserEvent(address,string,string,string,bool,uint256)
+          handler: handleUserEvent
+      file: ./src/contract.ts
