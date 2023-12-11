@@ -1,0 +1,40 @@
+type CommodityCreated @entity(immutable: true) {
+  id: Bytes!
+  token: Bytes! # address
+  name: String! # string
+  symbol: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OrderMatched @entity(immutable: true) {
+  id: Bytes!
+  buyOrderId: BigInt! # uint256
+  sellOrderId: BigInt! # uint256
+  matchedAmount: BigInt! # uint256
+  matchedPrice: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OrderPlaced @entity(immutable: true) {
+  id: Bytes!
+  Contract_id: BigInt! # uint256
+  user: Bytes! # address
+  amount: BigInt! # uint256
+  price: BigInt! # uint256
+  isBuyOrder: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OrderRemoved @entity(immutable: true) {
+  id: Bytes!
+  orderId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
