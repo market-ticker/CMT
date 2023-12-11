@@ -54,7 +54,7 @@ sequenceDiagram
 
 ## Contracts on Sepolia
 
-- `CommoditiesMarketTicker`: [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0x4F044B8375c49a181d3C0Da537eAB3d132cB766e#code)
+- `CommoditiesMarketTicker`: [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0xd0e6ef40883ae731809574d1f71750df713015bb#code)
 - `CommodityToken`: [View on Sepolia Etherscan](https://sepolia.etherscan.io/address/0x94ea3F341268cF911a00E635BCF40A1BC0c7ef1b#code)
 
 ## Contracts Description
