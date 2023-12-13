@@ -141,9 +141,11 @@ classDiagram
 ## Deployment
 
 The Commodity Market Ticker smart contract is deployed on the Sepolia network:
-[CommodityMarket Contract on Sepolia](https://sepolia.etherscan.io/address/0xEbDc891011504E58404Fb39f2c362c57414faab4)
+[CommodityMarket Contract on Sepolia](https://sepolia.etherscan.io/address/0xE7A23b40EDaD04eCf8eBc240DFB247E20eA2FBC2#code)
+[UserToken Contract on Sepolia](https://sepolia.etherscan.io/address/0xbd4df5595825EA7B95B7476C9b5aAcf6671FD782#code)
+[Commodity Contract on Sepolia](https://sepolia.etherscan.io/address/0x5F0A3E1ff9E02A2C72F1F64fF136C55c14257ece#code)
 
 ## Subgraph
 
 The Commodity Market Ticker subgraph is available at:
-[Subgraph on The Graph Studio](https://api.studio.thegraph.com/query/33148/commodity-market-ticker/v0.0.1)
+[Subgraph on The Graph Studio](https://api.studio.thegraph.com/query/33148/commodity-market-ticker/v0.0.2)
