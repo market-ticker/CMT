@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "./UserToken.sol";
 import "./Commodity.sol";
 /**
@@ -12,7 +13,7 @@ import "./Commodity.sol";
  * wont be used in  CODE IN PRODUCTION.
  */
 
-contract CommodityMarket is ChainlinkClient, VRFConsumerBaseV2, ConfirmedOwner {
+contract CommodityMarket is ChainlinkClient, VRFConsumerBaseV2, ConfirmedOwner,ERC1155Holder {
     //REGION: user managements
     UserToken public userToken;
     Commodity public commodityContract;
