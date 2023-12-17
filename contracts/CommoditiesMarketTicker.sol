@@ -1,4 +1,3 @@
-
 pragma solidity ^0.8.7;
 import "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
@@ -39,16 +38,16 @@ contract CommodityMarket is ChainlinkClient, VRFConsumerBaseV2, ConfirmedOwner,E
     // For a list of available gas lanes on each network,
     // see https://docs.chain.link/docs/vrf/v2/subscription/supported-networks/#configurations
     bytes32 keyHash = 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c;
-      
+    address vrfCoordinator = 0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625;
     // Depends on the number of requested values that you want sent to the
     // fulfillRandomWords() function. Storing each word costs about 20,000 gas,
     // so 100,000 is a safe default for this example contract. Test and adjust
     // this limit based on the network that you select, the size of the request,
     // and the processing of the callback request in the fulfillRandomWords()
     // function.
-    uint32 callbackGasLimit = 150000;
+    uint32 callbackGasLimit = 100000;
     // The default is 3, but you can set this higher.
-    uint16 requestConfirmations = 2;
+    uint16 requestConfirmations = 3;
     // For this example, retrieve 1 random values in one request.
     // Cannot exceed VRFV2Wrapper.getConfig().maxNumWords.
     uint32 numWords = 1;
@@ -113,8 +112,9 @@ contract CommodityMarket is ChainlinkClient, VRFConsumerBaseV2, ConfirmedOwner,E
      */
     constructor( uint64 subscriptionId)
      ConfirmedOwner(address(this))
-        VRFConsumerBaseV2(0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625)
+        VRFConsumerBaseV2(vrfCoordinator)
     {
+        COORDINATOR = VRFCoordinatorV2Interface(vrfCoordinator);
         setChainlinkToken(0x779877A7B0D9E8603169DdbD7836e478b4624789);
         userToken = new UserToken(address(this));
         commodityContract = new Commodity(address(this));
@@ -207,7 +207,7 @@ contract CommodityMarket is ChainlinkClient, VRFConsumerBaseV2, ConfirmedOwner,E
 
         uint256 commodityId = commodities[symbolCommodity];
         require(commodityId != 0, "Commodity isn't traded");
-
+        
 
         // Check if isBuyOrder is false and the user is a producer
             if (!isBuyOrder && userToken.balanceOf(msg.sender, 1) > 0) {
@@ -230,7 +230,7 @@ contract CommodityMarket is ChainlinkClient, VRFConsumerBaseV2, ConfirmedOwner,E
         address orderOwner = orders[orderId];
         address buyer = msg.sender;
         require(orderOwner != address(0), "Order does not exist");
-        require(orderOwner == buyer, "You can not sell to yourself");
+        require(orderOwner != buyer, "You can not sell to yourself");
         uint256 commodityId = commodities[symbolCommodity];
         require(commodityId != 0, "Commodity isn't traded");
 
