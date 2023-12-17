@@ -152,4 +152,4 @@ The Commodity Market Ticker subgraph is available at:
 
 ## Project POC
 
-[Subgraph on The Graph Studio](https://market-ticker.github.io/)
+[The project webpage](https://market-ticker.github.io/)
